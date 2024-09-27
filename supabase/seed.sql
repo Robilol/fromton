@@ -1,4 +1,4 @@
-INSERT INTO crust_type(name)
+INSERT INTO crust_types(name)
 VALUES ('Aucune'),
        ('Fleurie'),
        ('Naturelle'),
@@ -6,7 +6,7 @@ VALUES ('Aucune'),
        ('Sèche'),
        ('Cirée');
 
-INSERT INTO dough_type(name)
+INSERT INTO dough_types(name)
 VALUES ('Molle'),
        ('Pressée non cuite'),
        ('Pressée cuite'),
@@ -16,7 +16,7 @@ VALUES ('Molle'),
        ('Filée'),
        ('Lactique');
 
-INSERT INTO milk_type(name)
+INSERT INTO milk_types(name)
 VALUES ('Vache'),
        ('Chèvre'),
        ('Brebis'),
@@ -24,7 +24,7 @@ VALUES ('Vache'),
        ('Vache & Chèvre'),
        ('Chèvre & Brebis');
 
-INSERT INTO cheese(name, slug, aoc_year, aop_year, igp_year, dough_type_id, crust_type_id, milk_type_id)
+INSERT INTO cheeses(name, slug, aoc_year, aop_year, igp_year, dough_type_id, crust_type_id, milk_type_id)
 VALUES ('Abbaye de la Pierre-qui-Vire', 'abbaye-de-la-pierre-qui-vire', null, null, null, 1, 4, 1),
        ('Bleu d''Auvergne', 'bleu-d-auvergne', 1975, 1996, null, 4, 1, 1),
        ('Anneau du Vic-Bilh', 'anneau-du-vic-bilh', 2023, null, null, 1, 3, 2),
@@ -238,3 +238,18 @@ VALUES ('Abbaye de la Pierre-qui-Vire', 'abbaye-de-la-pierre-qui-vire', null, nu
        ('Valençay', 'valencay', 1998, 2004, null, 1, 3, 2),
        ('Chabichou du Poitou', 'chabichou-du-poitou', 1990, 1996, null, 1, 2, 2),
        ('La Brousse du Rove', 'la-brousse-du-rove', 2018, 2020, null, 5, 1, 2);
+
+INSERT INTO optimal_tasting_periods (name)
+VALUES ('Janvier'),
+       ('Février'),
+       ('Mars'),
+       ('Avril'),
+       ('Mai'),
+       ('Juin'),
+       ('Juillet'),
+       ('Août'),
+       ('Septembre'),
+       ('Octobre'),
+       ('Novembre'),
+       ('Décembre');
+    

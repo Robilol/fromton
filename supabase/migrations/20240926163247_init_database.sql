@@ -54,35 +54,27 @@ create policy "Anyone can update their own avatar." on storage.objects
   for update using ((select auth.uid()) = owner) with check (bucket_id = 'avatars');
 
 
-CREATE TABLE milk_type (
+CREATE TABLE milk_types (
   id SERIAL PRIMARY KEY,
   name VARCHAR(256) NOT NULL
 );
 
-CREATE TABLE crust_type (
+CREATE TABLE crust_types (
   id SERIAL PRIMARY KEY,
   name VARCHAR(256) NOT NULL
 );
 
-CREATE TABLE dough_type (
+CREATE TABLE dough_types (
   id SERIAL PRIMARY KEY,
   name VARCHAR(256) NOT NULL
 );
 
-CREATE TABLE dairy (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(256) NOT NULL,
-  address VARCHAR(256) NOT NULL,
-  city VARCHAR(256) NOT NULL,
-  zip_code VARCHAR(256) NOT NULL
-);
-
-CREATE TABLE cheese_power (
+CREATE TABLE cheese_powers (
   id SERIAL PRIMARY KEY,
   name VARCHAR(256) NOT NULL
 );
 
-CREATE TABLE cheese (
+CREATE TABLE cheeses (
   id SERIAL PRIMARY KEY,
   name VARCHAR(256) NOT NULL UNIQUE,
   slug VARCHAR(256) NOT NULL UNIQUE,
@@ -94,18 +86,18 @@ CREATE TABLE cheese (
   igp_year INTEGER,
   picture TEXT,
   deleted BOOLEAN DEFAULT FALSE,
-  milk_type_id INT NOT NULL REFERENCES milk_type(id),
-  crust_type_id INT NOT NULL REFERENCES crust_type(id),
-  dough_type_id INT NOT NULL REFERENCES dough_type(id),
-  cheese_power_id INT REFERENCES cheese_power(id)
+  milk_type_id INT NOT NULL REFERENCES milk_types(id),
+  crust_type_id INT NOT NULL REFERENCES crust_types(id),
+  dough_type_id INT NOT NULL REFERENCES dough_types(id),
+  cheese_power_id INT REFERENCES cheese_powers(id)
 );
 
-CREATE TABLE optimal_tasting_period (
+CREATE TABLE optimal_tasting_periods (
   id SERIAL PRIMARY KEY,
   name VARCHAR(256) NOT NULL
 );
 
-CREATE TABLE cheese_shop (
+CREATE TABLE cheese_shops (
   id SERIAL PRIMARY KEY,
   name VARCHAR(256) NOT NULL,
   address VARCHAR(256) NOT NULL,
@@ -113,7 +105,7 @@ CREATE TABLE cheese_shop (
   zip_code VARCHAR(256) NOT NULL
 );
 
-CREATE TABLE cheese_producer (
+CREATE TABLE cheese_producers (
   id SERIAL PRIMARY KEY,
   name VARCHAR(256) NOT NULL,
   address VARCHAR(256) NOT NULL,
@@ -121,27 +113,27 @@ CREATE TABLE cheese_producer (
   zip_code VARCHAR(256) NOT NULL
 );
 
-CREATE TABLE lead (
+CREATE TABLE leads (
   id SERIAL PRIMARY KEY,
   email VARCHAR(256) NOT NULL UNIQUE,
   "from" VARCHAR(256) NOT NULL,
   created_at TIMESTAMP DEFAULT NOW() NOT NULL
 );
 
-CREATE TABLE review (
+CREATE TABLE reviews (
   id SERIAL PRIMARY KEY,
   rating DOUBLE PRECISION NOT NULL,
   review TEXT,
   created_at TIMESTAMP DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMP DEFAULT NOW() NOT NULL,
-  cheese_id INT NOT NULL REFERENCES cheese(id),
-  cheese_shop_id INT NOT NULL REFERENCES cheese_shop(id),
-  cheese_producer_id INT REFERENCES cheese_producer(id),
+  cheese_id INT NOT NULL REFERENCES cheeses(id),
+  cheese_shop_id INT NOT NULL REFERENCES cheese_shops(id),
+  cheese_producer_id INT REFERENCES cheese_producers(id),
   profile_id uuid NOT NULL REFERENCES profiles(id)
 );
 
 CREATE TABLE cheeses_to_periods (
-  cheese_id INT NOT NULL REFERENCES cheese(id),
-  optimal_tasting_period_id INT NOT NULL REFERENCES optimal_tasting_period(id),
+  cheese_id INT NOT NULL REFERENCES cheeses(id),
+  optimal_tasting_period_id INT NOT NULL REFERENCES optimal_tasting_periods(id),
   PRIMARY KEY (cheese_id, optimal_tasting_period_id)
 );
