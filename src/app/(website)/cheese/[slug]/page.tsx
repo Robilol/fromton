@@ -39,12 +39,12 @@ export default async function CheeseDetail({
   return (
     <div className="flex flex-col gap-8 px-4">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-3xl border border-black shadow-fromton-input bg-white">
+        <div className="overflow-hidden rounded-3xl border-2 border-black shadow-fromton-input bg-white">
           <img src="https://placehold.co/800x600" alt="" />
         </div>
         <div className="grid grid-rows-2 gap-8">
-          <div className="rounded-3xl border border-black shadow-fromton-input bg-white p-4">
-            <h1 className="font-podkova text-4xl">{cheese?.name}</h1>
+          <div className="rounded-3xl border-2 border-black shadow-fromton-input bg-yellow p-4">
+            <h1 className="font-polySansBulkyWide text-4xl">{cheese?.name}</h1>
             <div className="mt-4 flex flex-row gap-6">
               <div className="flex w-1/2 flex-col gap-2">
                 <p className="flex flex-row items-center gap-2">
@@ -76,15 +76,15 @@ export default async function CheeseDetail({
               </div>
             </div>
           </div>
-          <div className="rounded-3xl border border-black shadow-fromton-input bg-white p-4">
-            <h3 className="font-podkova text-3xl">Avis</h3>
+          <div className="rounded-3xl border-2 border-black shadow-fromton-input bg-purple p-4">
+            <h3 className="font-polySansMedian text-3xl">Avis</h3>
             <div className="mt-4">
               <div className="flex flex-row items-center gap-1">
-                <StarIcon className="h-6 w-6 fill-cheese text-cheese" />
-                <StarIcon className="h-6 w-6 fill-cheese text-cheese" />
-                <StarIcon className="h-6 w-6 fill-cheese text-cheese" />
-                <StarIcon className="h-6 w-6 text-cheese" />
-                <StarIcon className="h-6 w-6 text-cheese" />
+                <StarIcon className="h-6 w-6 fill-yellow text-yellow" />
+                <StarIcon className="h-6 w-6 fill-yellow text-yellow" />
+                <StarIcon className="h-6 w-6 fill-yellow text-yellow" />
+                <StarIcon className="h-6 w-6 text-yellow" />
+                <StarIcon className="h-6 w-6 text-yellow" />
                 <span>(3.02)</span>
               </div>
               <p>2534 avis</p>
@@ -94,20 +94,20 @@ export default async function CheeseDetail({
         </div>
       </div>
       <div className="flex flex-col gap-8 lg:flex-row">
-        <div className="w-full self-start rounded-3xl border border-black shadow-fromton-input bg-white p-4 lg:w-1/2">
-          <h2 className="font-podkova text-3xl">Description</h2>
+        <div className="w-full self-start rounded-3xl border-2 border-black shadow-fromton-input bg-blue p-4 lg:w-1/2">
+          <h2 className="font-polySansMedian text-3xl">Description</h2>
           <div
             className="mt-4 flex flex-col gap-2"
             dangerouslySetInnerHTML={{ __html: cheese?.description || '' }}
           ></div>
         </div>
         <div className="flex w-full flex-col gap-8 lg:w-1/2">
-          <div className="rounded-3xl border border-black shadow-fromton-input bg-white p-4">
-            <h4 className="font-podkova text-3xl">Période de dégustation</h4>
+          <div className="rounded-3xl border border-black shadow-fromton-input bg-green p-4">
+            <h4 className="font-polySansMedian text-3xl">Période de dégustation</h4>
             <OptimalTastingPeriod periods={cheese?.cheeses_to_periods} />
           </div>
-          <div className="rounded-3xl border border-black shadow-fromton-input bg-white p-4">
-            <h4 className="font-podkova text-3xl">Caractéristiques</h4>
+          <div className="rounded-3xl border border-black shadow-fromton-input bg-pink p-4">
+            <h4 className="font-polySansMedian text-3xl">Caractéristiques</h4>
             <div className="mt-4 flex flex-row gap-6">
               <div className="mt-4 flex flex-col gap-2">
                 <p className="flex items-center gap-2">
@@ -131,8 +131,8 @@ export default async function CheeseDetail({
               </div>
             </div>
           </div>
-          <div className="rounded-3xl border border-black shadow-fromton-input bg-white p-4">
-            <h4 className="font-podkova text-3xl">Zone de production</h4>
+          <div className="rounded-3xl border-2 border-black shadow-fromton-input bg-white p-4">
+            <h4 className="font-polySansMedian text-3xl">Zone de production</h4>
             <div className="mt-4 flex justify-center">
               <ProductionMap departments={['2a', '75', '78', '13']} />
             </div>

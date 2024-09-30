@@ -13,19 +13,19 @@ export function MainNav({
     >
       <Link
         href="/dashboard"
-        className="text-sm font-medium transition-colors hover:text-primary"
+        className="text-sm font-medium transition-colors hover:text-yellow"
       >
         Overview
       </Link>
       <Link
         href="/dashboard/user"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-yellow"
       >
         Utilisateurs
       </Link>
       <Link
         href="/dashboard/cheese"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        className="text-sm font-medium text-muted-foreground transition-colors hover:text-yellow"
       >
         Fromages
       </Link>

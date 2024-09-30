@@ -17,11 +17,21 @@ const config = {
     extend: {
       fontFamily: {
         bungee: ["var(--font-bungee)"],
-        podkova: ["var(--font-podkova)"],
-        telex: ["var(--font-telex)"],
+        polySansBulky: ["var(--font-polySansBulky)"],
+        polySansBulkyWide: ["var(--font-polySansBulkyWide)"],
+        polySansMedian: ["var(--font-polySansMedian)"],
+        polySansSlim: ["var(--font-polySansSlim)"],
       },
       colors: {
-        cheese: "#FBD640",
+        yellow: "#ffe959",
+        pink: '#FFc6e7',
+        purple: '#837dff',
+        blue: '#8af1ff',
+        green: '#76f7ae',
+        danger: '#ff5454',
+        success: '#3cd9d',
+        warning: '#ff9f69',
+        body: '#fffbee',
         tremor: {
           brand: {
             faint: colors.blue[50],

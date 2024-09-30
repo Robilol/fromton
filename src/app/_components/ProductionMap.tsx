@@ -408,7 +408,7 @@ export const ProductionMap: FC<ProductionMapProps> = ({ departments }) => {
             key={path.id}
             id={path.id}
             d={path.d}
-            fill={departments.includes(path.id) ? "#FBD640" : undefined}
+            fill={departments.includes(path.id) ? "#ffe959" : undefined}
           />
         ))}
       </g>

@@ -77,7 +77,7 @@ export const RegisterForm: FC = () => {
             disabled={!methods.formState.isDirty || !methods.formState.isValid}
             type="submit"
             value="S'inscrire"
-            className="button !bg-cheese ml-auto disabled:opacity-50 mt-4 disabled:pointer-events-none"
+            className="button !bg-yellow ml-auto disabled:opacity-50 mt-4 disabled:pointer-events-none"
           />
         </form>
       </FormProvider>

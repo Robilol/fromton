@@ -50,9 +50,9 @@ const CheeseRating: FC<CheeseRatingProps> = ({ cheese, user }) => {
             <Rating
               className="!flex flex-row items-center gap-1"
               initialRating={review.rating}
-              emptySymbol={<StarIcon className="h-6 w-6 text-cheese" />}
+              emptySymbol={<StarIcon className="h-6 w-6 text-yellow" />}
               fullSymbol={
-                <StarIcon className="h-6 w-6 text-cheese fill-cheese" />
+                <StarIcon className="h-6 w-6 text-yellow fill-yellow" />
               }
               fractions={2}
               readonly

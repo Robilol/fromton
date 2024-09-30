@@ -35,14 +35,14 @@ export const OptimalTastingPeriod: FC<TastingPeriodProps> = ({ periods }) => {
           <div
             key={month.id}
             className={cx("flex flex-row items-center gap-2 text-gray-400", {
-              "!text-cheese": periods.find(
+              "!text-yellow": periods.find(
                 (p) => p.optimal_tasting_period_id === month.id,
               ),
             })}
           >
             <HeartIcon
               className={cx("h-6 w-6", {
-                "fill-cheese text-cheese": periods.find(
+                "fill-yellow text-yellow": periods.find(
                   (p) => p.optimal_tasting_period_id === month.id,
                 ),
               })}
@@ -56,14 +56,14 @@ export const OptimalTastingPeriod: FC<TastingPeriodProps> = ({ periods }) => {
           <div
             key={month.id}
             className={cx("flex flex-row items-center gap-2 text-gray-400", {
-              "!text-cheese": periods.find(
+              "!text-yellow": periods.find(
                 (p) => p.optimal_tasting_period_id === month.id,
               ),
             })}
           >
             <HeartIcon
               className={cx("h-6 w-6", {
-                "fill-cheese text-cheese": periods.find(
+                "fill-yellow text-yellow": periods.find(
                   (p) => p.optimal_tasting_period_id === month.id,
                 ),
               })}

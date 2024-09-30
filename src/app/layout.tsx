@@ -1,8 +1,9 @@
 import { Analytics } from '@vercel/analytics/react'
 import cx from 'classnames'
 import type { Metadata } from 'next'
-import { Bungee_Shade, Podkova, Telex } from 'next/font/google'
+import { Bungee_Shade, Podkova, Telex, Open_Sans } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
+import localFont from 'next/font/local'
 
 import './globals.css'
 
@@ -22,19 +23,17 @@ const bungeeShade = Bungee_Shade({
   variable: '--font-bungee',
 })
 
-const podkova = Podkova({
+const openSans = Open_Sans({
   subsets: ['latin'],
   display: 'swap',
   weight: '400',
-  variable: '--font-podkova',
+  variable: '--font-opensans',
 })
 
-const telex = Telex({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: '400',
-  variable: '--font-telex',
-})
+const polySansBulky = localFont({ src: './fonts/PolySans-Bulky.woff2', variable: '--font-polySansBulky' })
+const polySansBulkyWide = localFont({ src: './fonts/PolySans-BulkyWide.woff2', variable: '--font-polySansBulkyWide' })
+const polySansMedian = localFont({ src: './fonts/PolySans-Median.woff2', variable: '--font-polySansMedian' })
+const polySansSlim = localFont({ src: './fonts/PolySans-Slim.woff2', variable: '--font-polySansSlim' })
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
@@ -43,8 +42,10 @@ export default function Layout(props: { children: React.ReactNode }) {
       className={cx(
         'scroll-smooth',
         bungeeShade.variable,
-        podkova.variable,
-        telex.variable,
+        polySansBulky.variable,
+        polySansBulkyWide.variable,
+        polySansMedian.variable,
+        polySansSlim.variable,
       )}
     >
       <head>

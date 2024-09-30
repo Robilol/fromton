@@ -27,7 +27,7 @@ const Button: FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
       className={cx(
-        'button !bg-cheese flex flex-row gap-2 items-center disabled:pointer-events-none disabled:opacity-60',
+        'button !bg-yellow flex flex-row gap-2 items-center disabled:pointer-events-none disabled:opacity-60',
         className,
       )}
     >

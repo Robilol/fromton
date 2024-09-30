@@ -56,7 +56,7 @@ export const Searchbar: FC = () => {
 
   return (
     <div className="relative flex w-full flex-col items-center gap-2 rounded-3xl border-2 border-black bg-white p-8">
-      <div className="flex w-full flex-row items-center gap-4 rounded-full border border-black/25 bg-amber-300 px-4 py-2 shadow-fromton-searchbar ring-black focus-within:ring-1">
+      <div className="flex w-full flex-row items-center gap-4 rounded-full border border-black/25 bg-yellow px-4 py-2 shadow-fromton-searchbar ring-black focus-within:ring-1">
         <SearchIcon className="h-8 w-8" />
         <input
           type="text"

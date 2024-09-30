@@ -73,9 +73,9 @@
 }
 
 .input {
-  @apply focus:ring-cheese focus:outline-none focus:border-cheese border border-black shadow-fromton-input text-left text-lg transition-shadow duration-200 ease-in-out px-2 py-2 rounded-xl border-solid hover:shadow-fromton-hover;
+  @apply focus:ring-yellow focus:outline-none focus:border-primary border-2 border-black shadow-fromton-input text-left text-lg transition-shadow duration-200 ease-in-out py-2 px-6 rounded-full  border-solid hover:shadow-fromton-hover;
 }
 
 .button {
-  @apply cursor-pointer bg-white text-lg font-bold border border-black rounded-xl py-2 px-4 shadow-fromton-input hover:shadow-fromton-hover active:shadow-none transition-all hover:translate-y-[-4px] hover:translate-x-[-4px] active:translate-y-[4px] active:translate-x-[4px] duration-200 ease-in-out
+  @apply cursor-pointer bg-white text-lg font-polySansMedian font-bold border-2 border-black rounded-full py-2 px-6 shadow-fromton-input hover:shadow-fromton-hover active:shadow-none transition-all hover:translate-y-[-4px] hover:translate-x-[-4px] active:translate-y-[4px] active:translate-x-[4px] duration-200 ease-in-out
 }

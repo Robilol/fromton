@@ -13,7 +13,7 @@ export const SearchbarButton: FC<SearchbarButtonProps> = ({ label, icon }) => {
     <div
       className={cx(
         "flex cursor-pointer flex-row items-center gap-2 rounded-full border-2 border-black p-4 shadow-fromton-hover transition-all duration-200 ease-in-out",
-        { "bg-cheese !shadow-none translate-x-[6px] translate-y-[6px]": selected },
+        { "bg-yellow !shadow-none translate-x-[6px] translate-y-[6px]": selected },
       )}
       onClick={() => setSelected(!selected)}
     >

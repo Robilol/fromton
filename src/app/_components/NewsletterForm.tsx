@@ -70,7 +70,7 @@ const NewsletterForm: FC = () => {
               {...register('email')}
               type="email"
               placeholder="Votre email"
-              className="w-72 input"
+              className="w-full lg:w-96 h-16 input"
             />
             <span className="absolute -bottom-6 left-2 text-xs text-red-500">
               {errors.email?.message}
@@ -84,6 +84,7 @@ const NewsletterForm: FC = () => {
               isSubscribed ? <CircleCheck className="w-6 h-6" /> : undefined
             }
             type="submit"
+            className="!py-4 !px-12 !text-2xl !bg-white"
           />
         </form>
       </FormProvider>

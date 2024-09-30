@@ -26,8 +26,8 @@ const RatingInput: FC<RatingInputProps> = ({ name, label }) => {
             <Rating
               initialRating={value as number}
               onClick={onChange}
-              emptySymbol={<StarIcon className="h-8 w-8 text-cheese" />}
-              fullSymbol={<StarIcon className="h-8 w-8 text-cheese" />}
+              emptySymbol={<StarIcon className="h-8 w-8 text-yellow" />}
+              fullSymbol={<StarIcon className="h-8 w-8 text-yellow" />}
               fractions={2}
             />
             <span>({value}/5)</span>

@@ -29,7 +29,7 @@ export const Navbar: FC = () => {
 
   return (
     <div className="fixed inset-x-0 top-0 z-20 flex justify-center p-1 lg:p-4">
-      <div className="relative flex h-16 flex-row items-center justify-center gap-2 overflow-hidden rounded-full border border-black/5 bg-white px-8 py-2 shadow-fromton-navbar transition duration-500 ease-in-out lg:gap-4">
+      <div className="relative flex h-16 flex-row items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-8 py-2 border-2 border-black transition duration-500 ease-in-out lg:gap-4">
         <Link href="/">
           <Image src="/logo.svg" alt="logo" width={50} height={1} />
         </Link>

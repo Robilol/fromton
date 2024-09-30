@@ -8,13 +8,13 @@ export default function LoginPage() {
       <Input label="Password" name="password" type="password" />
       <div className="flex flex-row gap-4">
       <button
-        className="button !bg-cheese ml-auto disabled:opacity-50 mt-4 disabled:pointer-events-none"
+        className="button !bg-yellow ml-auto disabled:opacity-50 mt-4 disabled:pointer-events-none"
         formAction={login}
       >
         Log in
       </button>
       <button
-        className="button !bg-cheese ml-auto disabled:opacity-50 mt-4 disabled:pointer-events-none"
+        className="button !bg-yellow ml-auto disabled:opacity-50 mt-4 disabled:pointer-events-none"
         formAction={signup}
       >
         Sign up
