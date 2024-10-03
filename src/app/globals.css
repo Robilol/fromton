@@ -73,7 +73,7 @@
 }
 
 .input {
-  @apply focus:ring-yellow focus:outline-none focus:border-primary border-2 border-black shadow-fromton-input text-left text-lg transition-shadow duration-200 ease-in-out py-2 px-6 rounded-full  border-solid hover:shadow-fromton-hover;
+  @apply focus:ring-primary focus:outline-none focus:border-primary border-2 border-black shadow-fromton-input text-left text-lg transition-shadow duration-200 ease-in-out py-2 px-6 rounded-full  border-solid hover:shadow-fromton-hover;
 }
 
 .button {

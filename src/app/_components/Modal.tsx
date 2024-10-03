@@ -10,6 +10,7 @@ interface ModalProps {
   isOpen: boolean
   onClose: () => void
   className?: string
+  title?: string
 }
 
 const Modal: FC<PropsWithChildren<ModalProps>> = ({
@@ -17,6 +18,7 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({
   onClose,
   children,
   className = 'w-full max-w-md',
+  title,
 }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -46,10 +48,11 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({
             >
               <Dialog.Panel
                 className={cx(
-                  'relative transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all',
+                  'relative transform overflow-hidden rounded-2xl bg-white text-left align-middle border-2 border-black shadow-fromton-input transition-all',
                   className,
                 )}
               >
+                <Dialog.Title className="text-2xl font-polySansBulkyWide border-b-2 border-black px-6 py-4">{title}</Dialog.Title>
                 <button
                   className="absolute right-2 top-2"
                   type="button"
@@ -57,7 +60,9 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({
                 >
                   <XIcon className="h-8 w-8" />
                 </button>
-                {children}
+                <div className="px-6 py-4">
+                  {children}
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

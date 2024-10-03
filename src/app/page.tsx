@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col min-h-dvh bg-yellow">
+    <main className="flex flex-col min-h-dvh bg-primary">
       <div className='flex flex-row justify-between items-center px-4 py-4 lg:py-9 lg:px-10'>
       <Image src="/logo.svg" alt="logo" height={100} width={100} />
       {/* <div className='container mx-auto flex flex-row items-center justify-center'>
@@ -60,7 +60,7 @@ export default function HomePage() {
               </div>
               <div className="flex gap-4 font-bold items-center mt-8 text-lg">
                 <span className="font-polySansBulkyWide">Rejoindre la communauté</span>
-                <IconArrowNarrowRight className="h-8 w-8 fill-yellow" />
+                <IconArrowNarrowRight className="h-8 w-8 fill-primary" />
               </div>
             </a>
             <a
@@ -87,7 +87,7 @@ export default function HomePage() {
               </div>
               <div className="flex gap-4 font-bold items-center mt-8 text-lg">
                 <span className="font-polySansBulkyWide">Rejoindre la communauté</span>
-                <IconArrowNarrowRight className="h-8 w-8 fill-yellow" />
+                <IconArrowNarrowRight className="h-8 w-8 fill-primary" />
               </div>
             </a>
             <a
@@ -114,7 +114,7 @@ export default function HomePage() {
               </div>
               <div className="flex gap-4 font-bold items-center mt-8 text-lg">
                 <span className="font-polySansBulkyWide">Rejoindre la communauté</span>
-                <IconArrowNarrowRight className="h-8 w-8 fill-yellow" />
+                <IconArrowNarrowRight className="h-8 w-8 fill-primary" />
               </div>
             </a>
           </div>
@@ -140,7 +140,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row gap-8 justify-between items-center">
             <div className="flex flex-row gap-4 items-center">
               <Image src="/logo.svg" alt="logo" width={100} height={100} />
-              <span className="font-bungee text-3xl text-yellow">Fromton</span>
+              <span className="font-bungee text-3xl text-primary">Fromton</span>
             </div>
             <div className="flex flex-col gap-2 text-white font-polySansSlim">
               <span>© 2021-2024 Fromton</span>

@@ -10,10 +10,6 @@ interface ErrorMessageProps {
 const ErrorMessage: FC<ErrorMessageProps> = ({ errors, fieldName }) => {
   const error = _.get(errors, fieldName);
 
-  console.log(errors)
-  console.log(fieldName)
-  console.log(error)
-
   if (!error) {
     return null;
   }

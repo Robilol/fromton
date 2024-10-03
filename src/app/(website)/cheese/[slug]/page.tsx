@@ -43,7 +43,7 @@ export default async function CheeseDetail({
           <img src="https://placehold.co/800x600" alt="" />
         </div>
         <div className="grid grid-rows-2 gap-8">
-          <div className="rounded-3xl border-2 border-black shadow-fromton-input bg-yellow p-4">
+          <div className="rounded-3xl border-2 border-black shadow-fromton-input bg-primary p-4">
             <h1 className="font-polySansBulkyWide text-4xl">{cheese?.name}</h1>
             <div className="mt-4 flex flex-row gap-6">
               <div className="flex w-1/2 flex-col gap-2">
@@ -80,11 +80,11 @@ export default async function CheeseDetail({
             <h3 className="font-polySansMedian text-3xl">Avis</h3>
             <div className="mt-4">
               <div className="flex flex-row items-center gap-1">
-                <StarIcon className="h-6 w-6 fill-yellow text-yellow" />
-                <StarIcon className="h-6 w-6 fill-yellow text-yellow" />
-                <StarIcon className="h-6 w-6 fill-yellow text-yellow" />
-                <StarIcon className="h-6 w-6 text-yellow" />
-                <StarIcon className="h-6 w-6 text-yellow" />
+                <StarIcon className="h-6 w-6 fill-primary text-primary" />
+                <StarIcon className="h-6 w-6 fill-primary text-primary" />
+                <StarIcon className="h-6 w-6 fill-primary text-primary" />
+                <StarIcon className="h-6 w-6 text-primary" />
+                <StarIcon className="h-6 w-6 text-primary" />
                 <span>(3.02)</span>
               </div>
               <p>2534 avis</p>

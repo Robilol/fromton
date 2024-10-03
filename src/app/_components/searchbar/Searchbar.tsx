@@ -11,60 +11,88 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { createClient } from '../../../../utils/client'
 import { Tables } from '../../../../schema.gen'
 import { Cheese } from '@/types/cheese'
+import Button from '../Button'
+import { ProposalModal } from './ProposalModal'
 
 export const Searchbar: FC = () => {
   const supabase = createClient()
   const [search, setSearch] = useState<string>('')
-  const [cheeses, setCheeses] = useState<Cheese[]>([])
-  const [cheeseShops, setCheeseShops] = useState<Tables<'cheese_shops'>[]>([])
-  const [isFetchingCheeses, setIsFetchingCheeses] = useState<boolean>(false)
-  const [isFetchingCheeseShops, setIsFetchingCheeseShops] = useState<boolean>(false)
+  const [data, setData] = useState<Tables<'cheese_shops'>[] | Cheese[] | Tables<'cheese_producers'>[] | null>(null)
+  const [isFetching, setIsFetching] = useState<boolean>(false)
+  const [selectedCategory, setSelectedCategory] = useState<'cheese' | 'shop' | 'producer'>('cheese')
+  const [isProposalModalOpen, setIsProposalModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchData = async () => {
       if (search.length >= 3) {
-        setIsFetchingCheeses(true)
-        setIsFetchingCheeseShops(true)
+        setIsFetching(true)
 
-        const { data: cheeseData, error: cheeseError } = await supabase
-          .from('cheeses')
-          .select('*, milk_types(name), dough_types(name), crust_types(name)')
-          .ilike('name', `%${search}%`)
-          .returns<Cheese[]>()
+        switch (selectedCategory) {
+          case 'cheese':
+            const { data: cheeseData, error: cheeseError } = await supabase
+              .from('cheeses')
+              .select('*, milk_types(name), dough_types(name), crust_types(name)')
+              .ilike('name', `%${search}%`)
+              .returns<Cheese[]>()
 
-        if (cheeseError) {
-          console.error('Error fetching cheeses:', cheeseError)
-        } else {
-          setCheeses(cheeseData)
+            if (cheeseError) {
+              console.error('Error fetching cheeses:', cheeseError)
+            } else {
+              setData(cheeseData)
+            }
+            break
+
+          case 'shop':
+            const { data: cheeseShopData, error: cheeseShopError } = await supabase
+              .from('cheese_shops')
+              .select('*')
+              .ilike('name', `%${search}%`)
+
+            if (cheeseShopError) {
+              console.error('Error fetching cheese shops:', cheeseShopError)
+            } else {
+              setData(cheeseShopData)
+            }
+            break
+
+          case 'producer':
+            const { data: producerData, error: producerError } = await supabase
+              .from('cheese_producers')
+              .select('*')
+              .ilike('name', `%${search}%`)
+
+            if (producerError) {
+              console.error('Error fetching cheese producers:', producerError)
+            } else {
+              setData(producerData)
+            }
+            break
         }
-        setIsFetchingCheeses(false)
 
-        const { data: cheeseShopData, error: cheeseShopError } = await supabase
-          .from('cheese_shops')
-          .select('*')
-          .ilike('name', `%${search}%`)
-
-        if (cheeseShopError) {
-          console.error('Error fetching cheese shops:', cheeseShopError)
-        } else {
-          setCheeseShops(cheeseShopData)
-        }
-        setIsFetchingCheeseShops(false)
+        setIsFetching(false)
+      } else {
+        setData(null)
       }
     }
 
     fetchData()
-  }, [search])
+  }, [search, selectedCategory])
 
-  console.log(cheeses)
+  const handleCategoryChange = (category: 'cheese' | 'shop' | 'producer') => {
+    setSelectedCategory(category)
+    setSearch('')
+    setData(null)
+  }
+
 
   return (
+    <>
     <div className="relative flex w-full flex-col items-center gap-2 rounded-3xl border-2 border-black bg-white p-8">
-      <div className="flex w-full flex-row items-center gap-4 rounded-full border border-black/25 bg-yellow px-4 py-2 shadow-fromton-searchbar ring-black focus-within:ring-1">
+      <div className="flex w-full flex-row items-center gap-4 rounded-full border-2 border-black bg-primary px-4 py-2 shadow-fromton-input ring-black focus-within:ring-1">
         <SearchIcon className="h-8 w-8" />
         <input
           type="text"
-          placeholder="Rechercher des fromages, fromageries et producteurs"
+          placeholder={`Rechercher des ${selectedCategory === 'cheese' ? 'fromages' : selectedCategory === 'shop' ? 'fromageries' : 'producteurs'}`}
           className="w-full flex-1 border-none bg-transparent outline-none placeholder:italic placeholder:text-inherit focus:outline-none focus:ring-0"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -75,90 +103,105 @@ export const Searchbar: FC = () => {
           </button>
         )}
       </div>
-      <div className="flex w-full flex-col rounded-lg bg-white p-2">
-        <span className="mt-2 text-black/60">Je recherche des...</span>
-        <div className="mt-4 flex flex-row items-start gap-4">
-          <SearchbarButton label="Fromages" icon={<WrenchIcon />} />
-          <SearchbarButton label="Fromageries" icon={<IconBuildingStore />} />
-          <SearchbarButton label="Producteurs" icon={<IconBuildingCottage />} />
+      <div className="flex w-full flex-col rounded-lg p-2">
+        <div className="flex flex-row items-start gap-4">
+          <SearchbarButton label="Fromages" icon={<WrenchIcon />} selected={selectedCategory === 'cheese'} onClick={() => handleCategoryChange('cheese')} />
+          <SearchbarButton label="Fromageries" icon={<IconBuildingStore />} selected={selectedCategory === 'shop'} onClick={() => handleCategoryChange('shop')} />
+          <SearchbarButton label="Producteurs" icon={<IconBuildingCottage />} selected={selectedCategory === 'producer'} onClick={() => handleCategoryChange('producer')} />
         </div>
-        <div className="mt-2 flex flex-col divide-y divide-black/60">
-          <div className="flex flex-col gap-4 py-4">
-            <span className="text-black/60">Fromages</span>
-            {isFetchingCheeses ? (
-              <div className="flex flex-row items-center gap-2 px-2 py-1">
-                <Skeleton className="h-[50px] w-[50px] rounded-full" />
-                <Skeleton className="h-5 w-72" />
-              </div>
-            ) : cheeses && cheeses.length > 0 ? (
-              <ul className="flex flex-col gap-2">
-                {cheeses?.map((cheese) => (
-                  <li key={`cheese-${cheese.id}`}>
-                    <Link
-                      className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
-                      href={`/cheese/${cheese.slug}`}
-                    >
-                      <img
-                        className="h-[50px] w-[50px] rounded-full"
-                        src="https://placehold.co/50x50"
-                        alt=""
-                      />
-                      <span>{cheese.name}</span>
-                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
-                      <span>Lait de {cheese?.milk_types?.name}</span>
-                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
-                      <span>Pâte {cheese.dough_types?.name}</span>
-                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
-                      <span>Croûte {cheese.crust_types?.name}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <span>Aucun résultat</span>
-            )}
-          </div>
-          <div className="flex flex-col gap-4 py-4">
-            <span className="text-black/60">Fromageries</span>
-            {isFetchingCheeseShops ? (
-              <div className="flex flex-row items-center gap-2 px-2 py-1">
-                <Skeleton className="h-[50px] w-[50px] rounded-full" />
-                <Skeleton className="h-5 w-72" />
-              </div>
-            ) : cheeseShops && cheeseShops.length > 0 ? (
-              <ul className="flex flex-col gap-2">
-                {cheeseShops?.map((cheeseShop) => (
-                  <li key={`cheese-${cheeseShop.id}`}>
-                    <Link
-                      className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
-                      href={`/shop/${cheeseShop.id}`}
-                    >
-                      <img
-                        className="h-[50px] w-[50px] rounded-full"
-                        src="https://placehold.co/50x50"
-                        alt=""
-                      />
-                      <span>{cheeseShop.name}</span>
-                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
-                      <span>{cheeseShop.address}</span>
-                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
-                      <span>{cheeseShop.zip_code}</span>
-                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
-                      <span>{cheeseShop.city}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <span>Aucun résultat</span>
-            )}
-          </div>
-          <div className="flex flex-col gap-4 py-4">
-            <span className="text-black/60">Producteurs</span>
-            <span>Aucun résultat</span>
-          </div>
+        <div className="mt-4 flex flex-col divide-y divide-black/60">
+          {isFetching ? (
+            <div className="flex flex-row items-center gap-2 px-2 py-1">
+              <Skeleton className="h-[50px] w-[50px] rounded-full" />
+              <Skeleton className="h-5 w-72" />
+            </div>
+          ) : data && data.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {data?.map((item) => {
+                switch (selectedCategory) {
+                  case 'cheese':
+                    return (
+                      <li key={`${(item as Cheese).id}`}>
+                        <Link
+                          className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
+                          href={`/cheese/${(item as Cheese).slug}`}
+                        >
+                          <img
+                            className="h-[50px] w-[50px] rounded-full"
+                            src="https://placehold.co/50x50"
+                            alt=""
+                          />
+                          <span>{(item as Cheese).name}</span>
+                          <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                          <span>Lait de {(item as Cheese).milk_types?.name}</span>
+                          <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                          <span>Pâte {(item as Cheese).dough_types?.name}</span>
+                          <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                          <span>Croûte {(item as Cheese).crust_types?.name}</span>
+                        </Link>
+                      </li>
+                    );
+                  case 'shop':
+                    return (
+                      <li key={`${(item as Tables<'cheese_shops'>).id}`}>
+                        <Link
+                          className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
+                          href={`/shop/${item.id}`}
+                        >
+                          <img
+                            className="h-[50px] w-[50px] rounded-full"
+                            src="https://placehold.co/50x50"
+                            alt=""
+                          />
+                          <span>{(item as Tables<'cheese_shops'>).name}</span>
+                          <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                          <span>{(item as Tables<'cheese_shops'>).address}</span>
+                          <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                          <span>{(item as Tables<'cheese_shops'>).city}</span>
+                        </Link>
+                      </li>
+                    );
+                  case 'producer':
+                    return (
+                      <li key={`${(item as Tables<'cheese_producers'>).id}`}>
+                        <Link
+                          className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
+                          href={`/producer/${item.id}`}
+                        >
+                          <img
+                            className="h-[50px] w-[50px] rounded-full"
+                            src="https://placehold.co/50x50"
+                            alt=""
+                          />
+                          <span>{(item as Tables<'cheese_producers'>).name}</span>
+                          <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                          <span>{(item as Tables<'cheese_producers'>).address}</span>
+                          <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                          <span>{(item as Tables<'cheese_producers'>).city}</span>
+                        </Link>
+                      </li>
+                    );
+                  default:
+                    return null;
+                }
+              })}
+            </ul>
+          ) : data && data.length === 0 && (
+            <div className="flex flex-col gap-2 mt-4 items-center justify-center mx-auto rounded-3xl border-2 border-black bg-white p-2">
+              <span className="text-xl">Aucun résultat</span>
+              {selectedCategory === 'cheese' ? (
+                <Button label="Proposer un fromage" onClick={() => setIsProposalModalOpen(true)} />
+              ) : selectedCategory === 'shop' ? (
+                <Button label="Proposer une fromagerie" onClick={() => setIsProposalModalOpen(true)} />
+              ) : selectedCategory === 'producer' ? (
+                <Button label="Proposer un producteur" onClick={() => setIsProposalModalOpen(true)} />
+              ) : null}
+            </div>
+          )}
         </div>
       </div>
-    </div>
+      </div>
+      <ProposalModal isOpen={isProposalModalOpen} onClose={() => setIsProposalModalOpen(false)} category={selectedCategory} />
+    </>
   )
 }
