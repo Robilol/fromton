@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { updateSession } from './utils/middleware'
+import { updateSession } from '../utils/middleware'
 
 const blockedRoutes = ['/dashboard', '/cheese', '/auth', '/account']
 
