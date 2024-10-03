@@ -1,25 +1,12 @@
-import Input from '@/app/_components/form/Input'
-import { login, signup } from './actions'
+import { LoginForm } from "@/app/_components/LoginForm";
 
 export default function LoginPage() {
   return (
-    <form className="mt-4 flex w-full flex-col items-start gap-4">
-      <Input label="Email" name="email" type="email" />
-      <Input label="Password" name="password" type="password" />
-      <div className="flex flex-row gap-4">
-      <button
-        className="button !bg-yellow ml-auto disabled:opacity-50 mt-4 disabled:pointer-events-none"
-        formAction={login}
-      >
-        Log in
-      </button>
-      <button
-        className="button !bg-yellow ml-auto disabled:opacity-50 mt-4 disabled:pointer-events-none"
-        formAction={signup}
-      >
-        Sign up
-      </button>
+    <div className="container mx-auto flex justify-center">
+      <div className="bg-white max-w-md rounded-3xl p-8 border-2 border-black shadow-fromton-input">
+        <h1 className="text-3xl font-polySansBulkyWide">Connexion</h1>
+        <LoginForm />
       </div>
-    </form>
+    </div>
   )
 }

@@ -76,13 +76,22 @@ export default function Layout(props: { children: React.ReactNode }) {
           <Toaster
             toastOptions={{
               position: 'bottom-right',
-              className:
-                '!rounded-lg !bg-white !border !border-black !shadow-fromton-input !px-8 !py-4',
               success: {
                 iconTheme: {
                   primary: 'green',
                   secondary: 'white',
                 },
+                className:
+                '!rounded-lg !bg-success !border-2 !border-black !shadow-fromton-input !px-8 !py-4',
+              },
+              
+              error: {
+                iconTheme: {
+                  primary: 'white',
+                  secondary: 'red',
+                },
+                className:
+                '!rounded-lg !bg-danger !border-2 !border-black !shadow-fromton-input !px-8 !py-4 !text-white',
               },
             }}
           />

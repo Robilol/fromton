@@ -26,7 +26,7 @@ const CheeseRating: FC<CheeseRatingProps> = ({ cheese, user }) => {
           .from('reviews')
           .select('*')
           .eq('cheese_id', cheese.id)
-          .eq('user_id', user.id)
+          .eq('profile_id', user.id)
           .single()
 
         if (error) {
