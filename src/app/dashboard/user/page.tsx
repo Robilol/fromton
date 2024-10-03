@@ -19,12 +19,11 @@ export default async function userList({
 
   if (error) {
     console.error('Error fetching users:', error)
-    // You might want to handle this error more gracefully
   }
 
   return (
     <div className="container mx-auto py-8">
-      <UserTable users={users} />
+      <UserTable users={users || []} />
     </div>
   )
 }

@@ -19,7 +19,7 @@ export default function HomePage() {
         </ul>
       </div> */}
       <div>
-        <Link href="#newsletter" className='button block whitespace-nowrap font-polySansMedian font-semibold'>S'inscrire</Link>
+        <Link href="#newsletter" className='button block whitespace-nowrap font-polySansMedian font-semibold'>S&apos;inscrire</Link>
       </div>
       </div>
       <div className="container mx-auto flex flex-col md:flex-row pb-12 py-0 md:py-24 lg:pt-20 lg:pb-36">

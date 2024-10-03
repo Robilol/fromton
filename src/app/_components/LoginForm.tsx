@@ -57,7 +57,7 @@ export const LoginForm: FC = () => {
             disabled={!methods.formState.isDirty || !methods.formState.isValid}
             type="submit"
             label="Se connecter"
-            className="button !bg-cheese ml-auto disabled:opacity-50 disabled:pointer-events-none"
+            className="button !bg-primary ml-auto disabled:opacity-50 disabled:pointer-events-none"
           />
           </div>
         </form>

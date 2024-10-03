@@ -37,6 +37,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tables } from '../../../../schema.gen'
+import { Cheese } from '@/types/cheese'
 
 export const columns: ColumnDef<Tables<'cheeses'>>[] = [
   {
@@ -125,7 +126,7 @@ export const columns: ColumnDef<Tables<'cheeses'>>[] = [
   },
 ]
 
-export function CheeseTable({ cheeses }: { cheeses: Tables<'cheeses'>[] }) {
+export function CheeseTable({ cheeses }: { cheeses: Cheese[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

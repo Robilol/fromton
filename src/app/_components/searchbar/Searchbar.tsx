@@ -10,11 +10,12 @@ import { SearchbarButton } from '@/app/_components/searchbar/SearchbarButton'
 import { Skeleton } from '@/components/ui/skeleton'
 import { createClient } from '../../../../utils/client'
 import { Tables } from '../../../../schema.gen'
+import { Cheese } from '@/types/cheese'
 
 export const Searchbar: FC = () => {
   const supabase = createClient()
   const [search, setSearch] = useState<string>('')
-  const [cheeses, setCheeses] = useState<Tables<'cheeses'>[]>([])
+  const [cheeses, setCheeses] = useState<Cheese[]>([])
   const [cheeseShops, setCheeseShops] = useState<Tables<'cheese_shops'>[]>([])
   const [isFetchingCheeses, setIsFetchingCheeses] = useState<boolean>(false)
   const [isFetchingCheeseShops, setIsFetchingCheeseShops] = useState<boolean>(false)
@@ -29,6 +30,7 @@ export const Searchbar: FC = () => {
           .from('cheeses')
           .select('*, milk_types(name), dough_types(name), crust_types(name)')
           .ilike('name', `%${search}%`)
+          .returns<Cheese[]>()
 
         if (cheeseError) {
           console.error('Error fetching cheeses:', cheeseError)
@@ -53,6 +55,8 @@ export const Searchbar: FC = () => {
 
     fetchData()
   }, [search])
+
+  console.log(cheeses)
 
   return (
     <div className="relative flex w-full flex-col items-center gap-2 rounded-3xl border-2 border-black bg-white p-8">
@@ -91,7 +95,7 @@ export const Searchbar: FC = () => {
                 {cheeses?.map((cheese) => (
                   <li key={`cheese-${cheese.id}`}>
                     <Link
-                      className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-cheese/50"
+                      className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
                       href={`/cheese/${cheese.slug}`}
                     >
                       <img
@@ -100,11 +104,11 @@ export const Searchbar: FC = () => {
                         alt=""
                       />
                       <span>{cheese.name}</span>
-                      <div className="h-2 w-2 rounded-full bg-cheese/70"></div>
-                      <span>Lait de {cheese.milk_types?.name}</span>
-                      <div className="h-2 w-2 rounded-full bg-cheese/70"></div>
+                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                      <span>Lait de {cheese?.milk_types?.name}</span>
+                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
                       <span>Pâte {cheese.dough_types?.name}</span>
-                      <div className="h-2 w-2 rounded-full bg-cheese/70"></div>
+                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
                       <span>Croûte {cheese.crust_types?.name}</span>
                     </Link>
                   </li>
@@ -126,7 +130,7 @@ export const Searchbar: FC = () => {
                 {cheeseShops?.map((cheeseShop) => (
                   <li key={`cheese-${cheeseShop.id}`}>
                     <Link
-                      className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-cheese/50"
+                      className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
                       href={`/shop/${cheeseShop.id}`}
                     >
                       <img
@@ -135,11 +139,11 @@ export const Searchbar: FC = () => {
                         alt=""
                       />
                       <span>{cheeseShop.name}</span>
-                      <div className="h-2 w-2 rounded-full bg-cheese/70"></div>
+                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
                       <span>{cheeseShop.address}</span>
-                      <div className="h-2 w-2 rounded-full bg-cheese/70"></div>
-                      <span>{cheeseShop.zipCode}</span>
-                      <div className="h-2 w-2 rounded-full bg-cheese/70"></div>
+                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                      <span>{cheeseShop.zip_code}</span>
+                      <div className="h-2 w-2 rounded-full bg-primary/70"></div>
                       <span>{cheeseShop.city}</span>
                     </Link>
                   </li>
