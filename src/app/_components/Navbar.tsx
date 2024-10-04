@@ -34,7 +34,7 @@ export const Navbar: FC = () => {
           <Image src="/logo.svg" alt="logo" width={50} height={1} />
         </Link>
         <h1 className="font-bungee text-2xl">Fromton</h1>
-        <Link href={session ? '/account' : '/api/auth/signin'}>
+        <Link href={session ? '/account' : '/auth/login'}>
           <UserCircleIcon className="h-8 w-8" />
         </Link>
         <button onClick={() => setDisplaySearch(true)}>

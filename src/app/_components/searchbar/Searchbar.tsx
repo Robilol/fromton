@@ -13,6 +13,7 @@ import { Tables } from '../../../../schema.gen'
 import { Cheese } from '@/types/cheese'
 import Button from '../Button'
 import { ProposalModal } from './ProposalModal'
+import { toast } from 'react-hot-toast'
 
 export const Searchbar: FC = () => {
   const supabase = createClient()
@@ -82,6 +83,19 @@ export const Searchbar: FC = () => {
     setSelectedCategory(category)
     setSearch('')
     setData(null)
+  }
+
+  const handleProposalOpen = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user) {
+      toast.error('Vous devez être connecté pour proposer un fromage')
+      return
+    }
+
+    setIsProposalModalOpen(true)
   }
 
 
@@ -190,11 +204,11 @@ export const Searchbar: FC = () => {
             <div className="flex flex-col gap-2 mt-4 items-center justify-center mx-auto rounded-3xl border-2 border-black bg-white p-2">
               <span className="text-xl">Aucun résultat</span>
               {selectedCategory === 'cheese' ? (
-                <Button label="Proposer un fromage" onClick={() => setIsProposalModalOpen(true)} />
+                <Button label="Proposer un fromage" onClick={handleProposalOpen} />
               ) : selectedCategory === 'shop' ? (
-                <Button label="Proposer une fromagerie" onClick={() => setIsProposalModalOpen(true)} />
+                <Button label="Proposer une fromagerie" onClick={handleProposalOpen} />
               ) : selectedCategory === 'producer' ? (
-                <Button label="Proposer un producteur" onClick={() => setIsProposalModalOpen(true)} />
+                <Button label="Proposer un producteur" onClick={handleProposalOpen} />
               ) : null}
             </div>
           )}

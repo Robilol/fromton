@@ -1,11 +1,15 @@
-import Link from 'next/link'
+'use client'
 
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { usePathname } from 'next/navigation';
 
 export function MainNav({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) {
+  const pathname = usePathname();
+  
   return (
     <nav
       className={cn('flex items-center space-x-4 lg:space-x-6', className)}
@@ -13,21 +17,48 @@ export function MainNav({
     >
       <Link
         href="/dashboard"
-        className="text-sm font-medium transition-colors hover:text-primary"
+        className={cn(
+          "text-sm font-medium transition-colors hover:text-primary",
+          pathname === "/dashboard" ? "text-primary" : "text-muted-foreground"
+        )}
       >
-        Overview
+        Tableau de bord
       </Link>
       <Link
-        href="/dashboard/user"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        href="/dashboard/users"
+        className={cn(
+          "text-sm font-medium transition-colors hover:text-primary",
+          pathname === "/dashboard/users" ? "text-primary" : "text-muted-foreground"
+        )}
       >
         Utilisateurs
       </Link>
       <Link
-        href="/dashboard/cheese"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+        href="/dashboard/cheeses"
+        className={cn(
+          "text-sm font-medium transition-colors hover:text-primary",
+          pathname === "/dashboard/cheeses" ? "text-primary" : "text-muted-foreground"
+        )}
       >
         Fromages
+      </Link>
+      <Link
+        href="/dashboard/reviews"
+        className={cn(
+          "text-sm font-medium transition-colors hover:text-primary",
+          pathname === "/dashboard/reviews" ? "text-primary" : "text-muted-foreground"
+        )}
+      >
+        Avis
+      </Link>
+      <Link
+        href="/dashboard/proposals"
+        className={cn(
+          "text-sm font-medium transition-colors hover:text-primary",
+          pathname === "/dashboard/proposals" ? "text-primary" : "text-muted-foreground"
+        )}
+      >
+        Propositions
       </Link>
     </nav>
   )

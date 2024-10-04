@@ -9,16 +9,27 @@ import { createClient } from '../../../utils/client'
 import Input from './form/Input'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Button from './Button'
 
 export const registerSchema = z
     .object({
-        email: z.string().email(),
-        password: z.string().min(4),
-        confirm: z.string().min(4),
+        email: z.string({
+            required_error: 'Email est requis',
+        }).email(),
+        password: z.string({
+            required_error: 'Mot de passe est requis',
+        }).min(4, {
+            message: 'Mot de passe doit contenir au moins 4 caractères',
+        }),
+        confirm: z.string({
+            required_error: 'Confirmation du mot de passe est requise',
+        }).min(4, {
+            message: 'Confirmation du mot de passe doit contenir au moins 4 caractères',
+        }),
         // username: z.string(),
     })
     .refine((data) => data.password === data.confirm, {
-        message: "Passwords don't match",
+        message: "Les mots de passe ne correspondent pas",
         path: ['confirm'],
     })
 
@@ -64,11 +75,11 @@ export const RegisterForm: FC = () => {
                     />
                     <div className="flex flex-row gap-4 mt-4 justify-between w-full">
                         <Link href="/auth/login" className='button !bg-white'>Se connecter</Link>
-                        <input
+                        <Button
                             disabled={!methods.formState.isDirty || !methods.formState.isValid}
                             type="submit"
-                            value="S'inscrire"
-                            className="button !bg-primary ml-auto disabled:opacity-50 disabled:pointer-events-none"
+                            label="S'inscrire"
+                            loading={methods.formState.isSubmitting}
                         />
                     </div>
                 </form>

@@ -6,10 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:types": "supabase gen types typescript --local > schema.gen.ts"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.19",
+    "@headlessui/react": "^2.1.9",
     "@headlessui/tailwindcss": "^0.2.1",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-avatar": "^1.1.0",
@@ -20,6 +21,7 @@
     "@radix-ui/react-navigation-menu": "^1.2.0",
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
     "@reflet/http": "^1.0.0",

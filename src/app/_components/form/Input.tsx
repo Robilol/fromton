@@ -4,20 +4,23 @@ import React, {type FC, type HTMLInputTypeAttribute} from 'react'
 import {useFormContext} from 'react-hook-form'
 import cx from 'classnames'
 import _ from 'lodash'
+import ErrorMessage from './ErrorMessage'
 
 interface InputProps {
   name: string
   label?: string
-  type?: HTMLInputTypeAttribute
+  type?: HTMLInputTypeAttribute 
+  className?: string
 }
-const Input: FC<InputProps> = ({ type = 'text', label, name }) => {
+const Input: FC<InputProps> = ({ type = 'text', label, name, className }) => {
   const methods = useFormContext()
   const { formState, register } = methods
   const error = _.get(formState.errors, name)
 
+
   return (
     <div className="flex flex-col gap-1 w-full items-start">
-      <label htmlFor={name} className="w-full">
+      <label htmlFor={name} className="w-full flex flex-col items-start gap-1">
         <span
           className={cx('', {
             'text-red-500': error,
@@ -26,7 +29,7 @@ const Input: FC<InputProps> = ({ type = 'text', label, name }) => {
           {label}
         </span>
         <input
-          className={cx('input w-full', {
+          className={cx('input', className, {
             '!border-red-500': error,
           })}
           {...register(name)}
@@ -34,11 +37,7 @@ const Input: FC<InputProps> = ({ type = 'text', label, name }) => {
           type={type}
         />
       </label>
-      {error && (
-        <span className="font-ApfelGrotezk py-2 text-sm text-red-500">
-          {error?.message as string}
-        </span>
-      )}
+      <ErrorMessage errors={formState.errors} fieldName={name} />
     </div>
   )
 }

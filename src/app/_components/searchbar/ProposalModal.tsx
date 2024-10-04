@@ -14,8 +14,8 @@ export const ProposalModal: FC<ProposalModalProps> = ({
   category,
 }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={`Proposer un ${category === 'cheese' ? 'fromage' : category === 'shop' ? 'fromagerie' : 'producteur'}`}>
-      <CheeseProposalForm />
+    <Modal className="w-full max-w-2xl" isOpen={isOpen} onClose={onClose} title={`Proposer un ${category === 'cheese' ? 'fromage' : category === 'shop' ? 'fromagerie' : 'producteur'}`}>
+      <CheeseProposalForm onSuccess={onClose} />
     </Modal>
   )
 }

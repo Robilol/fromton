@@ -9,6 +9,7 @@ import toast from 'react-hot-toast'
 import { z } from 'zod'
 import Button from '@/app/_components/Button'
 import { createClient } from '../../../utils/client'
+import Input from './form/Input'
 
 const LeadFormSchema = z.object({
   email: z
@@ -66,15 +67,7 @@ const NewsletterForm: FC = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="relative">
-            <input
-              {...register('email')}
-              type="email"
-              placeholder="Votre email"
-              className="w-full lg:w-96 h-16 input"
-            />
-            <span className="absolute -bottom-6 left-2 text-xs text-red-500">
-              {errors.email?.message}
-            </span>
+            <Input name="email"  className="w-full lg:w-96 h-16 input"/>
           </div>
           <Button
             label={isSubscribed ? 'Inscrit' : "S'inscrire"}

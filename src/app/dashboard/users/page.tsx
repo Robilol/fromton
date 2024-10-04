@@ -4,11 +4,7 @@ import { createClient } from '../../../../utils/server'
 import { Tables } from '../../../../schema.gen'
 
 
-export default async function userList({
-  params,
-}: {
-  params: { cheeseId: string }
-}) {
+export default async function userList() {
   const supabase = createClient()
 
   const { data: users, error } = await supabase

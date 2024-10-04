@@ -15,7 +15,7 @@ const ErrorMessage: FC<ErrorMessageProps> = ({ errors, fieldName }) => {
   }
 
   return (
-    <span className="font-ApfelGrotezk py-2 text-sm text-red-500">
+    <span className="font-ApfelGrotezk text-sm text-red-500 mt-1">
       {error?.message as string}
     </span>
   );
