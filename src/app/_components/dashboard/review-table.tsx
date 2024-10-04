@@ -149,7 +149,7 @@ export function ReviewTable({ reviews }: { reviews: Tables<'reviews'>[] }) {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 gap-4">
         <Input
           placeholder="Nom"
           value={(table.getColumn('cheeses.name')?.getFilterValue() as string) ?? ''}
