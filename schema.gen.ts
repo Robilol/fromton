@@ -131,59 +131,59 @@ export type Database = {
       }
       cheese_proposals: {
         Row: {
-          aoc_year: number | null
-          aop_year: number | null
           cheese_power_id: number | null
+          cheese_producer_id: number | null
+          cheese_shop_id: number | null
           country_id: number
           created_at: string
           crust_type_id: number
           description: string | null
           dough_type_id: number
           id: number
-          igp_year: number | null
           milk_type_id: number
           name: string
           official_cheese_id: number | null
-          picture: string | null
           proposed_by_id: string
+          rating: number
+          review: string | null
           status: Database["public"]["Enums"]["status"]
           updated_at: string
         }
         Insert: {
-          aoc_year?: number | null
-          aop_year?: number | null
           cheese_power_id?: number | null
+          cheese_producer_id?: number | null
+          cheese_shop_id?: number | null
           country_id: number
           created_at?: string
           crust_type_id: number
           description?: string | null
           dough_type_id: number
           id?: number
-          igp_year?: number | null
           milk_type_id: number
           name: string
           official_cheese_id?: number | null
-          picture?: string | null
           proposed_by_id: string
+          rating: number
+          review?: string | null
           status?: Database["public"]["Enums"]["status"]
           updated_at?: string
         }
         Update: {
-          aoc_year?: number | null
-          aop_year?: number | null
           cheese_power_id?: number | null
+          cheese_producer_id?: number | null
+          cheese_shop_id?: number | null
           country_id?: number
           created_at?: string
           crust_type_id?: number
           description?: string | null
           dough_type_id?: number
           id?: number
-          igp_year?: number | null
           milk_type_id?: number
           name?: string
           official_cheese_id?: number | null
-          picture?: string | null
           proposed_by_id?: string
+          rating?: number
+          review?: string | null
           status?: Database["public"]["Enums"]["status"]
           updated_at?: string
         }
@@ -193,6 +193,20 @@ export type Database = {
             columns: ["cheese_power_id"]
             isOneToOne: false
             referencedRelation: "cheese_powers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cheese_proposals_cheese_producer_id_fkey"
+            columns: ["cheese_producer_id"]
+            isOneToOne: false
+            referencedRelation: "cheese_producers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cheese_proposals_cheese_shop_id_fkey"
+            columns: ["cheese_shop_id"]
+            isOneToOne: false
+            referencedRelation: "cheese_shops"
             referencedColumns: ["id"]
           },
           {
@@ -536,6 +550,7 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          email: string | null
           full_name: string | null
           id: string
           updated_at: string | null
@@ -543,6 +558,7 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
+          email?: string | null
           full_name?: string | null
           id: string
           updated_at?: string | null
@@ -550,6 +566,7 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
+          email?: string | null
           full_name?: string | null
           id?: string
           updated_at?: string | null
@@ -626,81 +643,6 @@ export type Database = {
           },
           {
             foreignKeyName: "reviews_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      temporary_reviews: {
-        Row: {
-          cheese_producer_id: number | null
-          cheese_proposal_id: number
-          cheese_shop_id: number | null
-          cheese_shop_proposal_id: number | null
-          created_at: string
-          id: number
-          profile_id: string
-          rating: number
-          review: string | null
-          updated_at: string
-        }
-        Insert: {
-          cheese_producer_id?: number | null
-          cheese_proposal_id: number
-          cheese_shop_id?: number | null
-          cheese_shop_proposal_id?: number | null
-          created_at?: string
-          id?: number
-          profile_id: string
-          rating: number
-          review?: string | null
-          updated_at?: string
-        }
-        Update: {
-          cheese_producer_id?: number | null
-          cheese_proposal_id?: number
-          cheese_shop_id?: number | null
-          cheese_shop_proposal_id?: number | null
-          created_at?: string
-          id?: number
-          profile_id?: string
-          rating?: number
-          review?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "temporary_reviews_cheese_producer_id_fkey"
-            columns: ["cheese_producer_id"]
-            isOneToOne: false
-            referencedRelation: "cheese_producers"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "temporary_reviews_cheese_proposal_id_fkey"
-            columns: ["cheese_proposal_id"]
-            isOneToOne: false
-            referencedRelation: "cheese_proposals"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "temporary_reviews_cheese_shop_id_fkey"
-            columns: ["cheese_shop_id"]
-            isOneToOne: false
-            referencedRelation: "cheese_shops"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "temporary_reviews_cheese_shop_proposal_id_fkey"
-            columns: ["cheese_shop_proposal_id"]
-            isOneToOne: false
-            referencedRelation: "cheese_shops_proposals"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "temporary_reviews_profile_id_fkey"
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"

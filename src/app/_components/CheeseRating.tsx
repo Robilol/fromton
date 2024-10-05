@@ -7,9 +7,10 @@ import ReviewButton from '@/app/_components/ReviewButton'
 import { createClient } from '../../../utils/client'
 import { User } from '@supabase/supabase-js'
 import { Tables } from '../../../schema.gen'
+import { GetCheeseDetails } from '@/types/cheese'
 
 interface CheeseRatingProps {
-  cheese: Tables<'cheeses'>
+  cheese: GetCheeseDetails
   user: User | null
 }
 
@@ -42,28 +43,47 @@ const CheeseRating: FC<CheeseRatingProps> = ({ cheese, user }) => {
   }, [user, cheese, supabase])
 
   return (
-    <div className="mt-4 flex flex-row justify-between">
-      {review && (
-        <div className="mt-4">
-          <div className="flex flex-row items-center gap-1">
-            {/*@ts-expect-error types*/}
-            <Rating
-              className="!flex flex-row items-center gap-1"
-              initialRating={review.rating}
-              emptySymbol={<StarIcon className="h-6 w-6 text-primary" />}
-              fullSymbol={
-                <StarIcon className="h-6 w-6 text-primary fill-primary" />
-              }
-              fractions={2}
-              readonly
-            />
-            <span>({review.rating})</span>
-          </div>
-          <p>Votre avis</p>
+    <>
+      <div className="mt-4">
+        <div className="flex flex-row items-center gap-1">
+          {/*@ts-expect-error types*/}
+          <Rating
+            className="!flex flex-row items-center gap-1"
+            initialRating={cheese?.reviews?.length > 0 ? cheese.reviews.reduce((acc, review) => acc + review.rating, 0) / cheese.reviews.length : 0}
+            emptySymbol={<StarIcon className="h-6 w-6 text-primary" />}
+            fullSymbol={
+              <StarIcon className="h-6 w-6 text-primary fill-primary" />
+            }
+            fractions={2}
+            readonly
+          />
+          <span>({cheese?.reviews?.length > 0 ? cheese.reviews.reduce((acc, review) => acc + review.rating, 0) / cheese.reviews.length : 0})</span>
         </div>
-      )}
-      <ReviewButton cheese={cheese} user={user} />
-    </div>
+        <p>{cheese?.reviews?.length} avis</p>
+      </div>
+      <div className="mt-4 flex flex-row justify-between">
+        {review && (
+          <div className="mt-4">
+            <div className="flex flex-row items-center gap-1">
+              {/*@ts-expect-error types*/}
+              <Rating
+                className="!flex flex-row items-center gap-1"
+                initialRating={review.rating}
+                emptySymbol={<StarIcon className="h-6 w-6 text-primary" />}
+                fullSymbol={
+                  <StarIcon className="h-6 w-6 text-primary fill-primary" />
+                }
+                fractions={2}
+                readonly
+              />
+              <span>({review.rating})</span>
+            </div>
+            <p>Votre avis</p>
+          </div>
+        )}
+        <ReviewButton cheese={cheese} user={user} />
+      </div>
+    </>
   )
 }
 

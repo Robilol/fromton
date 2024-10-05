@@ -13,6 +13,8 @@ import CheeseRating from '@/app/_components/CheeseRating'
 import { OptimalTastingPeriod } from '@/app/_components/OptimalTastingPeriod'
 import { ProductionMap } from '@/app/_components/ProductionMap'
 import { createClient } from '../../../../../utils/server'
+import Rating from 'react-rating'
+import { GetCheeseDetails } from '@/types/cheese'
 
 
 export default async function CheeseDetail({
@@ -21,20 +23,23 @@ export default async function CheeseDetail({
   params: { slug: string }
 }) {
   const supabase = createClient()
-  
+
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
   const { data: cheese, error } = await supabase
     .from('cheeses')
-    .select('*, milk_types(*), dough_types(*), crust_types(*), cheeses_to_periods(*)')
+    .select('*, milk_types(*), dough_types(*), crust_types(*), cheeses_to_periods(*), reviews(*)')
     .eq('slug', params.slug)
-    .single()
+    .eq('reviews.status', 'validated')
+    .single<GetCheeseDetails>()
 
   if (!cheese) {
     return null
   }
+
+  console.log(cheese)
 
   return (
     <div className="flex flex-col gap-8 px-4">
@@ -78,17 +83,6 @@ export default async function CheeseDetail({
           </div>
           <div className="rounded-3xl border-2 border-black shadow-fromton-input bg-purple p-4">
             <h3 className="font-polySansMedian text-3xl">Avis</h3>
-            <div className="mt-4">
-              <div className="flex flex-row items-center gap-1">
-                <StarIcon className="h-6 w-6 fill-primary text-primary" />
-                <StarIcon className="h-6 w-6 fill-primary text-primary" />
-                <StarIcon className="h-6 w-6 fill-primary text-primary" />
-                <StarIcon className="h-6 w-6 text-primary" />
-                <StarIcon className="h-6 w-6 text-primary" />
-                <span>(3.02)</span>
-              </div>
-              <p>2534 avis</p>
-            </div>
             <CheeseRating cheese={cheese} user={user} />
           </div>
         </div>

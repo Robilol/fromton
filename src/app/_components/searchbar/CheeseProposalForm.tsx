@@ -98,6 +98,9 @@ const CheeseProposalForm: React.FC<CheeseProposalFormProps> = ({ onSuccess }) =>
                 dough_type_id: data.doughType,
                 crust_type_id: data.crustType,
                 country_id: data.country_id,
+                rating: data.rating,
+                review: data.review,
+                cheese_shop_id: data.shopId,
             }).select().single()
 
         if (!cheeseProposal || error) {
@@ -105,24 +108,9 @@ const CheeseProposalForm: React.FC<CheeseProposalFormProps> = ({ onSuccess }) =>
             return
         }
 
-        const { error: errorReview } = await supabase
-            .from('temporary_reviews')
-            .insert({
-                cheese_proposal_id: cheeseProposal.id,
-                profile_id: user?.id,
-                rating: data.rating,
-                review: data.review,
-                cheese_shop_id: data.shopId,
-            })
-
-        if (errorReview) {
-            toast.error('Une erreur est survenue')
-            return
-        }
-
         setIsLoading(false)
 
-        if (!errorReview && !error) {
+        if (!error) {
             toast.success('Fromage proposé !')
             onSuccess()
         }

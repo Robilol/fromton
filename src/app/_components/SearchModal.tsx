@@ -7,10 +7,7 @@ import React, {
   useEffect,
   useState,
 } from 'react'
-import toast from 'react-hot-toast'
-import Button from '@/app/_components/Button'
 import { Searchbar } from '@/app/_components/searchbar/Searchbar'
-import { createClient } from '../../../utils/client'
 
 interface ModalProps {
   isOpen: boolean
@@ -48,7 +45,7 @@ export const SearchModal: FC<PropsWithChildren<ModalProps>> = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-3xl">
-                <Searchbar />
+                <Searchbar onResultClick={onClose} />
               </Dialog.Panel>
             </Transition.Child>
           </div>

@@ -29,6 +29,7 @@ const Input: FC<InputProps> = ({ type = 'text', label, name, className }) => {
           {label}
         </span>
         <input
+          autoComplete="off"
           className={cx('input', className, {
             '!border-red-500': error,
           })}

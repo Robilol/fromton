@@ -4,10 +4,7 @@ import cx from "classnames";
 import { Tables } from "../../../schema.gen";
 
 interface TastingPeriodProps {
-  periods?: {
-    cheese_id: number;
-    optimal_tasting_period_id: number;
-  }[]
+  periods?: Tables<"cheeses_to_periods">[]
 }
 
 export const OptimalTastingPeriod: FC<TastingPeriodProps> = ({ periods }) => {

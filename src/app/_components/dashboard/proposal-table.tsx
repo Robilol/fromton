@@ -37,9 +37,12 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tables } from '../../../../schema.gen'
-import { GetCheeses } from '@/types/cheese'
+import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import { Enums } from '../../../../schema.gen'
+import { createClient } from '../../../../utils/client'
+import { toast } from 'react-hot-toast'
 
-export const columns: ColumnDef<Tables<'cheeses'>>[] = [
+export const columns = (updateProposalStatus: (id: number, status: Enums<'status'>) => void): ColumnDef<Tables<'cheese_proposals'>>[] => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -64,24 +67,21 @@ export const columns: ColumnDef<Tables<'cheeses'>>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Nom',
+    header: 'Fromage',
   },
   {
-    accessorKey: 'description',
+    accessorKey: 'cheese_shops.name',
+    header: 'Fromagerie',
+  },
+  {
+    accessorKey: 'review',
     header: 'Description',
   },
   {
-    accessorKey: 'aocYear',
-    header: 'AOC',
+    accessorKey: 'rating',
+    header: 'Note',
   },
-  {
-    accessorKey: 'aopYear',
-    header: 'AOP',
-  },
-  {
-    accessorKey: 'igpYear',
-    header: 'IGP',
-  },
+  { accessorKey: 'profiles.email', header: 'Proposé par' },
   {
     accessorKey: 'createdAt',
     header: 'Créé le',
@@ -92,14 +92,14 @@ export const columns: ColumnDef<Tables<'cheeses'>>[] = [
     ),
   },
   {
-    accessorKey: 'updatedAt',
-    header: 'Mis à jour le',
+    accessorKey: 'status',
+    header: 'Statut',
   },
   {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const cheese = row.original
+      const user = row.original
 
       return (
         <DropdownMenu>
@@ -111,14 +111,11 @@ export const columns: ColumnDef<Tables<'cheeses'>>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(cheese.id.toString())}
-            >
-              Copy cheese ID
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => updateProposalStatus(row.original.id, 'validated')}>Accepter</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => updateProposalStatus(row.original.id, 'rejected')}>Refuser</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Voir le fromage</DropdownMenuItem>
+            <DropdownMenuItem>Voir la fromagerie</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -126,7 +123,8 @@ export const columns: ColumnDef<Tables<'cheeses'>>[] = [
   },
 ]
 
-export function CheeseTable({ cheeses }: { cheeses: GetCheeses[] }) {
+export function ProposalTable({ proposals, onProposalsChange }: { proposals: Tables<'cheese_proposals'>[], onProposalsChange: () => void }) {
+  const supabase = createClient()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -135,9 +133,24 @@ export function CheeseTable({ cheeses }: { cheeses: GetCheeses[] }) {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  const updateProposalStatus = async (id: number, status: Enums<'status'>) => {
+    const query = async () => supabase.from('cheese_proposals').update({ status }).eq('id', id)
+
+    toast.promise(
+      query(),
+      {
+        loading: 'En cours...',
+        success: 'Statut modifié',
+        error: 'Une erreur est survenue',
+      },
+    )
+
+    onProposalsChange()
+  }
+
   const table = useReactTable({
-    data: cheeses,
-    columns,
+    data: proposals,
+    columns: columns(updateProposalStatus),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -156,14 +169,23 @@ export function CheeseTable({ cheeses }: { cheeses: GetCheeses[] }) {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 gap-4">
         <Input
           placeholder="Nom"
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+          value={(table.getColumn('cheeses.name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('name')?.setFilterValue(event.target.value)
+            table.getColumn('cheeses.name')?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
+        />
+        <DataTableFacetedFilter
+          column={table.getColumn('status')}
+          title="Statut"
+          options={[
+            { label: 'Pending', value: 'pending' },
+            { label: 'Validated', value: 'validated' },
+            { label: 'Rejected', value: 'rejected' }
+          ]}
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -203,9 +225,9 @@ export function CheeseTable({ cheeses }: { cheeses: GetCheeses[] }) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   )
                 })}

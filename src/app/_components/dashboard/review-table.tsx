@@ -39,7 +39,10 @@ import {
 import { Tables } from '../../../../schema.gen'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 import { Enums } from '../../../../schema.gen'
-export const columns: ColumnDef<Tables<'reviews'>>[] = [
+import { createClient } from '../../../../utils/client'
+import { toast } from 'react-hot-toast'
+
+export const columns = (updateReviewStatus: (id: number, status: Enums<'status'>) => void): ColumnDef<Tables<'reviews'>>[] => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -107,8 +110,8 @@ export const columns: ColumnDef<Tables<'reviews'>>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Accepter</DropdownMenuItem>
-            <DropdownMenuItem>Refuser</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => updateReviewStatus(row.original.id, 'validated')}>Accepter</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => updateReviewStatus(row.original.id, 'rejected')}>Refuser</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Voir le fromage</DropdownMenuItem>
             <DropdownMenuItem>Voir la fromagerie</DropdownMenuItem>
@@ -119,7 +122,8 @@ export const columns: ColumnDef<Tables<'reviews'>>[] = [
   },
 ]
 
-export function ReviewTable({ reviews }: { reviews: Tables<'reviews'>[] }) {
+export function ReviewTable({ reviews, onReviewsChange }: { reviews: Tables<'reviews'>[], onReviewsChange: () => void }) {
+  const supabase = createClient()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -128,9 +132,24 @@ export function ReviewTable({ reviews }: { reviews: Tables<'reviews'>[] }) {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
+  const updateReviewStatus = async (id: number, status: Enums<'status'>) => {
+    const query = async () => supabase.from('reviews').update({ status }).eq('id', id)
+
+    toast.promise(
+      query(),
+      {
+        loading: 'En cours...',
+        success: 'Statut modifié',
+        error: 'Une erreur est survenue',
+      },
+    )
+
+    onReviewsChange()
+  }
+
   const table = useReactTable({
     data: reviews,
-    columns,
+    columns: columns(updateReviewStatus),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),

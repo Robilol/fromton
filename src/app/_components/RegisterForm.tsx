@@ -26,7 +26,11 @@ export const registerSchema = z
         }).min(4, {
             message: 'Confirmation du mot de passe doit contenir au moins 4 caractères',
         }),
-        // username: z.string(),
+        username: z.string({
+            required_error: 'Nom d\'utilisateur est requis',
+        }).min(3, {
+            message: 'Nom d\'utilisateur doit contenir au moins 3 caractères',
+        }),
     })
     .refine((data) => data.password === data.confirm, {
         message: "Les mots de passe ne correspondent pas",
@@ -45,9 +49,13 @@ export const RegisterForm: FC = () => {
     })
 
 
-    const handleSubmit: SubmitHandler<RegisterFormData> = async ({ email, password }) => {
+    const handleSubmit: SubmitHandler<RegisterFormData> = async ({ email, password, username }) => {
         const supabase = createClient()
-        const { error } = await supabase.auth.signUp({ email, password, })
+        const { error } = await supabase.auth.signUp({ email, password, options: {
+            data: {
+                username: username,
+            }
+        } })
 
         if (error) {
             console.error(error)
@@ -65,7 +73,7 @@ export const RegisterForm: FC = () => {
                     className="mt-4 flex w-full flex-col items-start gap-4"
                     onSubmit={methods.handleSubmit(handleSubmit)}
                 >
-                    {/* <Input name="username" label="Nom d'utilisateur" /> */}
+                    <Input name="username" label="Nom d'utilisateur" />
                     <Input name="email" type="email" label="Adresse email" />
                     <Input name="password" type="password" label="Mot de passe" />
                     <Input
