@@ -60,7 +60,7 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({
                 >
                   <XIcon className="h-8 w-8" />
                 </button>
-                <div className="px-6 py-4">
+                <div className="px-6 py-4 overflow-y-auto max-h-[65vh]">
                   {children}
                 </div>
               </Dialog.Panel>

@@ -106,7 +106,7 @@ export const Searchbar: FC<SearchbarProps> = ({ onResultClick }) => {
 
   return (
     <>
-      <div className="relative flex w-full flex-col items-center gap-2 rounded-3xl border-2 border-black bg-white p-8">
+      <div className="relative flex w-full flex-col items-center gap-2 rounded-3xl border-2 border-black bg-white p-4 lg:p-8">
         <div className="flex w-full flex-row items-center gap-4 rounded-full border-2 border-black bg-primary px-4 py-2 shadow-fromton-input ring-black focus-within:ring-1">
           <SearchIcon className="h-8 w-8" />
           <input
@@ -123,8 +123,8 @@ export const Searchbar: FC<SearchbarProps> = ({ onResultClick }) => {
             </button>
           )}
         </div>
-        <div className="flex w-full flex-col rounded-lg p-2">
-          <div className="flex flex-row items-start gap-4">
+        <div className="flex w-full flex-col rounded-lg py-2">
+          <div className="flex flex-row items-start gap-4 overflow-x-auto py-2 md:py-0">
             <SearchbarButton label="Fromages" icon={<WrenchIcon />} selected={selectedCategory === 'cheese'} onClick={() => handleCategoryChange('cheese')} />
             <SearchbarButton label="Fromageries" icon={<IconBuildingStore />} selected={selectedCategory === 'shop'} onClick={() => handleCategoryChange('shop')} />
             <SearchbarButton label="Producteurs" icon={<IconBuildingCottage />} selected={selectedCategory === 'producer'} onClick={() => handleCategoryChange('producer')} />
@@ -136,7 +136,7 @@ export const Searchbar: FC<SearchbarProps> = ({ onResultClick }) => {
                 <Skeleton className="h-5 w-72" />
               </div>
             ) : data && data.length > 0 ? (
-              <ScrollArea className="max-h-[400px]">
+              <ScrollArea className="max-h-[300px] lg:max-h-[400px]">
                 <ul className="flex flex-col gap-2">
                   {data?.map((item) => {
                     switch (selectedCategory) {
@@ -145,7 +145,7 @@ export const Searchbar: FC<SearchbarProps> = ({ onResultClick }) => {
                           <li key={`${(item as GetCheeses).id}`}>
                             <Link
                               onClick={onResultClick}
-                              className="flex h-full w-full flex-row items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
+                              className="flex relative h-full w-full flex-col lg:flex-row items-start lg:items-center gap-2 rounded-lg px-2 py-1 transition hover:bg-primary/50"
                               href={`/cheese/${(item as GetCheeses).slug}`}
                             >
                               <img
@@ -153,12 +153,12 @@ export const Searchbar: FC<SearchbarProps> = ({ onResultClick }) => {
                                 src="https://placehold.co/50x50"
                                 alt=""
                               />
-                              <span>{(item as GetCheeses).name}</span>
-                              <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                              <span className="absolute top-4 left-20 lg:relative lg:left-0 lg:top-0">{(item as GetCheeses).name}</span>
+                              <div className="h-2 w-2 rounded-full bg-primary/70 hidden lg:block"></div>
                               <span>Lait de {(item as GetCheeses).milk_types?.name}</span>
-                              <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                              <div className="h-2 w-2 rounded-full bg-primary/70 hidden lg:block"></div>
                               <span>Pâte {(item as GetCheeses).dough_types?.name}</span>
-                              <div className="h-2 w-2 rounded-full bg-primary/70"></div>
+                              <div className="h-2 w-2 rounded-full bg-primary/70 hidden lg:block"></div>
                               <span>Croûte {(item as GetCheeses).crust_types?.name}</span>
                             </Link>
                           </li>

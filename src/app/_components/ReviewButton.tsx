@@ -92,15 +92,15 @@ const ReviewButton: FC<ReviewButtonProps> = ({ cheese, user }) => {
         type="button"
       />
       <Modal
+        title={`Noter ${cheese?.name}`}
         className="w-full max-w-lg"
         isOpen={ratingModalOpen}
         onClose={() => setRatingModalOpen(false)}
       >
         <div className="flex flex-col">
-          <span className="font-podkova text-3xl">Noter {cheese?.name}</span>
           <FormProvider {...methods}>
             <form
-              className="mt-4 flex w-full flex-col items-start gap-4"
+              className="flex w-full flex-col items-start gap-4"
               onSubmit={methods.handleSubmit(onSubmit)}
             >
               <RatingInput name="rating" />

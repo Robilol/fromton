@@ -119,8 +119,8 @@ const CheeseProposalForm: React.FC<CheeseProposalFormProps> = ({ onSuccess }) =>
     return (
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)} className="gap-2 flex flex-col">
-                <div className="flex flex-row gap-2">
-                    <div className="flex flex-col gap-2 w-1/2">
+                <div className="flex flex-col gap-2 lg:flex-row lg:gap-2">
+                    <div className="flex flex-col gap-2 w-full lg:w-1/2">
                         <span className="text-xl font-bold">Le fromage</span>
                         <Input
                             name="name"
@@ -148,8 +148,7 @@ const CheeseProposalForm: React.FC<CheeseProposalFormProps> = ({ onSuccess }) =>
                             data={countries.map((country) => ({ id: country.id, label: country.name }))}
                         />
                     </div>
-                    <div className="flex flex-col gap-2 w-1/2">
-
+                    <div className="flex flex-col gap-2 w-full lg:w-1/2 mt-4 lg:mt-0">
                         <span className="text-xl font-bold">Votre note</span>
                         <RatingInput name="rating" />
                         <TextArea

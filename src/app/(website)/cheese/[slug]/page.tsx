@@ -42,12 +42,12 @@ export default async function CheeseDetail({
   console.log(cheese)
 
   return (
-    <div className="flex flex-col gap-8 px-4">
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+    <div className="flex flex-col gap-4 lg:gap-8">
+      <div className="grid grid-cols-1 gap-4 lg:gap-8 lg:grid-cols-2">
         <div className="overflow-hidden rounded-3xl border-2 border-black shadow-fromton-input bg-white">
           <img src="https://placehold.co/800x600" alt="" />
         </div>
-        <div className="grid grid-rows-2 gap-8">
+        <div className="grid grid-rows-2 gap-4 lg:gap-8">
           <div className="rounded-3xl border-2 border-black shadow-fromton-input bg-primary p-4">
             <h1 className="font-polySansBulkyWide text-4xl">{cheese?.name}</h1>
             <div className="mt-4 flex flex-row gap-6">
@@ -102,7 +102,7 @@ export default async function CheeseDetail({
           </div>
           <div className="rounded-3xl border border-black shadow-fromton-input bg-pink p-4">
             <h4 className="font-polySansMedian text-3xl">Caractéristiques</h4>
-            <div className="mt-4 flex flex-row gap-6">
+            <div className="mt-4 flex flex-col gap-0 lg:flex-row lg:gap-6">
               <div className="mt-4 flex flex-col gap-2">
                 <p className="flex items-center gap-2">
                   <WeightIcon className="h-6 w-6" />

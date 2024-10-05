@@ -34,7 +34,7 @@ export const SearchModal: FC<PropsWithChildren<ModalProps>> = ({
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full w-full items-center justify-center">
+          <div className="flex min-h-full w-full items-center justify-center p-4 lg:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
